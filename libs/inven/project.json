@@ -1,0 +1,9 @@
+{
+  "name": "inven",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/inven/src",
+  "projectType": "library",
+  "tags": [],
+  "// targets": "to see all targets run: nx show project inven --web",
+  "targets": {}
+}
