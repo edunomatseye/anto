@@ -17,6 +17,7 @@
     "paths": {
       "@anto/inven": ["libs/inven/src/index.ts"],
       "@anto/product": ["libs/product/src/index.ts"],
+      "@anto/ship": ["libs/ship/src/index.ts"],
       "@anto/sidebar": ["libs/sidebar/src/index.ts"]
     }
   },
