@@ -83,5 +83,8 @@
         "unitTestRunner": "vitest"
       }
     }
+  },
+  "release": {
+    "projects": ["libs/*", "!apps"]
   }
 }
