@@ -27,7 +27,8 @@
     "src/**/*.jsx",
     ".next/types/**/*.ts",
     "dist/anto/.next/types/**/*.ts",
-    "next-env.d.ts"
+    "next-env.d.ts",
+    "tools/scripts/*.ts"
   ],
   "extends": "./tsconfig.base.json"
 }
