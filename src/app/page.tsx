@@ -13,6 +13,7 @@ export default function Index() {
         <div className="container">
           <Sidebar />
           <Product />
+          <Sidebar />
         </div>
       </div>
     </div>
