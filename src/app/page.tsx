@@ -1,5 +1,5 @@
-import { Product } from '@anto/product';
-import { Sidebar } from '@anto/sidebar';
+import { Product } from 'libs/product/src/index';
+import { Sidebar } from 'libs/sidebar/src/index';
 
 export default function Index() {
   /*
