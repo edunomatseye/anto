@@ -1,4 +1,4 @@
-export default {
+const config = {
   displayName: 'anto',
   preset: './jest.preset.js',
   transform: {
@@ -12,3 +12,5 @@ export default {
     '<rootDir>/src/**/*(*.)@(spec|test).[jt]s?(x)',
   ],
 };
+
+export default config;
