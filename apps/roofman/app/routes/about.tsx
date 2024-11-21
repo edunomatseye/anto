@@ -1,9 +1,19 @@
 import { createFileRoute, useRouter } from '@tanstack/react-router';
+import { createServerFn } from '@tanstack/start';
 
 export const Route = createFileRoute('/')({
   component: Home,
   loader: async () => await getCount(),
 });
+
+const getMagicalBlackbok = createServerFn({ method: 'GET' })
+  .validator((data: unknown) => data)
+  .handler(async ({ data, context, method }) => {
+    const response = await fetch('https://placeholderdata.typicode.com/posts', {
+      cache: 'no-store',
+    });
+    return await response.json();
+  });
 
 function Home() {
   const router = useRouter();
@@ -14,6 +24,9 @@ function Home() {
       type="button"
       onClick={() => {
         getCount().then(() => {
+          router.invalidate();
+        });
+        getMagicalBlackbok().then(() => {
           router.invalidate();
         });
       }}
