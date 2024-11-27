@@ -17,9 +17,10 @@ export default defineConfig({
   },
   plugins: [react(), nxViteTsPaths(), nxCopyAssetsPlugin(['*.md'])],
   // Uncomment this if you are using workers.
-  // worker: {
-  //  plugins: [ nxViteTsPaths() ],
-  // },
+  worker: {
+    plugins: () => [nxViteTsPaths()],
+    format: 'iife',
+  },
   build: {
     outDir: '../../dist/app/inventory',
     emptyOutDir: true,
