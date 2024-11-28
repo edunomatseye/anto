@@ -13,14 +13,23 @@ export const logger = createMiddleware()
     return next();
   });
 
-const getMagicalBlackbok = createServerFn({ method: 'GET' })
+interface Pokemon {
+  name: string;
+  url: string;
+}
+
+interface PokemonResponse {
+  count: number;
+  results: Pokemon[];
+}
+
+const getPokemon = createServerFn({ method: 'GET' })
   .middleware([logger])
-  .validator((data: unknown) => data)
-  .handler(async ({ data, context, method }) => {
-    const response = await fetch('https://placeholderdata.typicode.com/posts', {
-      cache: 'no-store',
-    });
-    return await response.json();
+  .validator((data: unknown): unknown => data)
+  .handler(async () => {
+    const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=10');
+    const data: PokemonResponse = await response.json();
+    return { status: 200, body: data };
   });
 
 function Home() {
@@ -34,7 +43,7 @@ function Home() {
         getCount().then(() => {
           router.invalidate();
         });
-        getMagicalBlackbok().then(() => {
+        getPokemon().then(() => {
           router.invalidate();
         });
       }}
