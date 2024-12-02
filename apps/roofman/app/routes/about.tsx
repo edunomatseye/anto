@@ -1,5 +1,6 @@
 import { createFileRoute, useRouter } from '@tanstack/react-router';
 import { createMiddleware, createServerFn } from '@tanstack/start';
+import { createClient } from '@supabase/supabase-js';
 
 export const Route = createFileRoute('/')({
   component: Home,
@@ -65,13 +66,40 @@ const rateLimitMiddleware = createMiddleware().server(
   }
 );
 
-const getPokemon = createServerFn({ method: 'GET' })
+// Add Supabase client configuration
+const supabase = createClient(
+  process.env.SUPABASE_URL || '',
+  process.env.SUPABASE_ANON_KEY || ''
+);
+
+// Add the server function
+const getSupabaseData = createServerFn({ method: 'GET' })
   .middleware([logger, rateLimitMiddleware])
   .validator((data: unknown): unknown => data)
   .handler(async () => {
-    const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=10');
-    const data: PokemonResponse = await response.json();
-    return { status: 200, body: data };
+    try {
+      const { data, error } = await supabase
+        .from('your_table_name')
+        .select('*')
+        .limit(10);
+
+      if (error) {
+        return {
+          status: 400,
+          body: { error: error.message },
+        };
+      }
+
+      return {
+        status: 200,
+        body: data,
+      };
+    } catch (err) {
+      return {
+        status: 500,
+        body: { error: 'Internal server error' },
+      };
+    }
   });
 
 function Home() {
@@ -85,7 +113,7 @@ function Home() {
         getCount().then(() => {
           router.invalidate();
         });
-        getPokemon().then(() => {
+        getSupabaseData().then(() => {
           router.invalidate();
         });
       }}
