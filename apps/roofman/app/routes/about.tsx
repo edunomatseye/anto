@@ -35,7 +35,7 @@ const loggingMiddleware = createMiddleware().server(async ({ next, data }) => {
 const rateLimit = new Map<string, { count: number; timestamp: number }>();
 
 const rateLimitMiddleware = createMiddleware().server(
-  async ({ next, context }) => {
+  async ({ next, context }: { next: any; context: { request: Request } }) => {
     console.log('Request received:', context);
     const ip = context?.request?.headers?.get('x-forwarded-for') || 'unknown';
     const now = Date.now();
