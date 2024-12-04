@@ -14,23 +14,6 @@ export const logger = createMiddleware()
     return next();
   });
 
-interface Pokemon {
-  name: string;
-  url: string;
-}
-
-interface PokemonResponse {
-  count: number;
-  results: Pokemon[];
-}
-
-const loggingMiddleware = createMiddleware().server(async ({ next, data }) => {
-  console.log('Request received:', data);
-  const result = await next();
-  console.log('Response processed:', result);
-  return result;
-});
-
 // Rate limiter using a simple in-memory store
 const rateLimit = new Map<string, { count: number; timestamp: number }>();
 
