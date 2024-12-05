@@ -18,9 +18,8 @@ export const logger = createMiddleware()
 const rateLimit = new Map<string, { count: number; timestamp: number }>();
 
 const rateLimitMiddleware = createMiddleware().server(
-  async ({ next, context }: { next: any; context: { request: Request } }) => {
-    console.log('Request received:', context);
-    const ip = context?.request?.headers?.get('x-forwarded-for') || 'unknown';
+  async ({ next, data, context }) => {
+    const ip = context?.headers?.get('x-forwarded-for') || 'unknown';
     const now = Date.now();
     const windowMs = 60 * 1000; // 1 minute window
     const maxRequests = 30; // max requests per window
