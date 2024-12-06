@@ -4,7 +4,12 @@ import { createClient } from '@supabase/supabase-js';
 
 export const Route = createFileRoute('/')({
   component: Home,
-  loader: async () => await getCount(),
+  loader: async () => {
+    const count = await getCount();
+    return {
+      count,
+    };
+  },
 });
 
 export const logger = createMiddleware()
