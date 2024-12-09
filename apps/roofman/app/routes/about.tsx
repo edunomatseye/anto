@@ -1,6 +1,7 @@
 import { createFileRoute, useRouter } from '@tanstack/react-router';
 import { createMiddleware, createServerFn } from '@tanstack/start';
 import { createClient } from '@supabase/supabase-js';
+import { FileUploader } from '../components/FileUploader';
 
 export const Route = createFileRoute('/')({
   component: Home,
@@ -94,19 +95,23 @@ function Home() {
   const state = Route.useLoaderData();
 
   return (
-    <button
-      type="button"
-      onClick={() => {
-        getCount().then(() => {
-          router.invalidate();
-        });
-        getSupabaseData().then(() => {
-          router.invalidate();
-        });
-      }}
-    >
-      Add 1 to {state}?
-    </button>
+    <div>
+      <div>File Uploader: </div>
+      <FileUploader />
+      <button
+        type="button"
+        onClick={() => {
+          getCount().then(() => {
+            router.invalidate();
+          });
+          getSupabaseData().then(() => {
+            router.invalidate();
+          });
+        }}
+      >
+        Add 1 to {state}?
+      </button>
+    </div>
   );
 }
 async function getCount() {
